@@ -4,7 +4,6 @@ import { ApolloProvider } from '@apollo/client';
 import Layout from '../components/Layout';
 import withData from '../lib/withData';
 
-// TODO: Swap with custom css.
 import '../components/styles/nprogress.css';
 
 Router.events.on('routeChangeStart', () => Nprogress.start());

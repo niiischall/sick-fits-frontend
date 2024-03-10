@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client';
 import ItemStyles from './styles/ItemStyles';
 import Title from './styles/Title';
 import PriceTag from './styles/PriceTag';
-import formatMoney from '../lib/formayMoney';
+import formatMoney from '../lib/utils/formayMoney';
 
 const StyledProductList = styled.div`
   display: grid;
@@ -17,6 +17,7 @@ const StyledProductList = styled.div`
 export const ALL_PRODUCTS_QUERY = gql`
   query {
     allProducts {
+      id
       name
       description
       price

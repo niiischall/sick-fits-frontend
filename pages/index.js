@@ -1,9 +1,9 @@
 import Products from './products';
 
-const Index = () => (
+const IndexPage = () => (
   <div>
     <Products />
   </div>
 );
 
-export default Index;
+export default IndexPage;

@@ -1,7 +1,7 @@
-const Account = () => (
+const AccountPage = () => (
   <div>
     <p>Account</p>
   </div>
 );
 
-export default Account;
+export default AccountPage;

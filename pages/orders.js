@@ -1,7 +1,7 @@
-const Orders = () => (
+const OrdersPage = () => (
   <div>
     <p>Orders</p>
   </div>
 );
 
-export default Orders;
+export default OrdersPage;

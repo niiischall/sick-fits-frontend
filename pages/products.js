@@ -1,6 +1,8 @@
+import Products from '../components/Products';
+
 const ProductsPage = () => (
   <div>
-    <p>Products</p>
+    <Products />
   </div>
 );
 

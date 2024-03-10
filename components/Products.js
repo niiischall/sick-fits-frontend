@@ -14,7 +14,7 @@ const StyledProductList = styled.div`
   grid-gap: 60px;
 `;
 
-const ALL_PRODUCTS_QUERY = gql`
+export const ALL_PRODUCTS_QUERY = gql`
   query {
     allProducts {
       name

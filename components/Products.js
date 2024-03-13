@@ -43,6 +43,9 @@ const Product = ({ product }) => (
     </Title>
     <PriceTag>{formatMoney(product?.price)}</PriceTag>
     <p>{product?.description}</p>
+    <Link href={{ pathname: '/edit', query: { id: product?.id } }}>
+      Edit ✍🏻
+    </Link>
   </ItemStyles>
 );
 

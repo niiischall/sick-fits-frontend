@@ -7,6 +7,8 @@ import ItemStyles from './styles/ItemStyles';
 import Title from './styles/Title';
 import PriceTag from './styles/PriceTag';
 import formatMoney from '../lib/utils/formayMoney';
+import Delete from './Delete';
+import ProductButtonContainer from './styles/ProductButtonContainer';
 
 const StyledProductList = styled.div`
   display: grid;
@@ -43,9 +45,14 @@ const Product = ({ product }) => (
     </Title>
     <PriceTag>{formatMoney(product?.price)}</PriceTag>
     <p>{product?.description}</p>
-    <Link href={{ pathname: '/edit', query: { id: product?.id } }}>
-      Edit ✍🏻
-    </Link>
+    <ProductButtonContainer>
+      <Link href={{ pathname: '/edit', query: { id: product?.id } }}>
+        Edit ✍🏻
+      </Link>
+      <Delete id={product?.id}>
+        <span>Delete 🗑️</span>
+      </Delete>
+    </ProductButtonContainer>
   </ItemStyles>
 );
 

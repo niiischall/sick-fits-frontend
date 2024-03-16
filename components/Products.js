@@ -9,6 +9,7 @@ import PriceTag from './styles/PriceTag';
 import formatMoney from '../lib/utils/formayMoney';
 import Delete from './Delete';
 import ProductButtonContainer from './styles/ProductButtonContainer';
+import Pagination from './Pagination';
 
 const StyledProductList = styled.div`
   display: grid;
@@ -76,11 +77,15 @@ const Products = () => {
   }
 
   return (
-    <StyledProductList>
-      {data.allProducts.map((product) => (
-        <Product key={product.id} product={product} />
-      ))}
-    </StyledProductList>
+    <div>
+      <Pagination page={2} />
+      <StyledProductList>
+        {data.allProducts.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </StyledProductList>
+      <Pagination page={2} />
+    </div>
   );
 };
 

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import propTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
+import { useRouter } from 'next/dist/client/router';
 import ItemStyles from './styles/ItemStyles';
 import Title from './styles/Title';
 import PriceTag from './styles/PriceTag';
@@ -58,6 +59,9 @@ const Product = ({ product }) => (
 );
 
 const Products = () => {
+  const { query } = useRouter();
+  const page = query?.page ? parseInt(query?.page) : 1;
+
   const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY);
 
   if (loading) {
@@ -78,13 +82,13 @@ const Products = () => {
 
   return (
     <div>
-      <Pagination page={2} />
+      <Pagination page={page} />
       <StyledProductList>
         {data.allProducts.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </StyledProductList>
-      <Pagination page={2} />
+      <Pagination page={page} />
     </div>
   );
 };

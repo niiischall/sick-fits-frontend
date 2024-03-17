@@ -11,6 +11,7 @@ import formatMoney from '../lib/utils/formayMoney';
 import Delete from './Delete';
 import ProductButtonContainer from './styles/ProductButtonContainer';
 import Pagination from './Pagination';
+import { perPage } from '../config';
 
 const StyledProductList = styled.div`
   display: grid;
@@ -19,8 +20,8 @@ const StyledProductList = styled.div`
 `;
 
 export const ALL_PRODUCTS_QUERY = gql`
-  query {
-    allProducts {
+  query ALL_PRODUCTS($first: Int, $skip: Int) {
+    allProducts(first: $first, skip: $skip) {
       id
       name
       description
@@ -62,7 +63,12 @@ const Products = () => {
   const { query } = useRouter();
   const page = query?.page ? parseInt(query?.page) : 1;
 
-  const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY);
+  const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
+    variables: {
+      first: perPage,
+      skip: page * perPage - perPage,
+    },
+  });
 
   if (loading) {
     return (

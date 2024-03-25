@@ -1,56 +1,60 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
-import { USER_AUTHENTICATED_QUERY } from '../lib/hooks/useUser';
 import useForm from '../lib/hooks/useForm';
 import StyledForm from './styles/Form';
 import DisplayError from './ErrorMessage';
 
-export const AUTHENTICATE_USER_MUTATION = gql`
-  mutation AUTHENTICATE_USER($email: String!, $password: String!) {
-    authenticateUserWithPassword(email: $email, password: $password) {
-      ... on UserAuthenticationWithPasswordSuccess {
-        item {
-          id
-          name
-          email
-        }
-      }
-      ... on UserAuthenticationWithPasswordFailure {
-        code
-        message
-      }
+export const CREATE_USER_MUTATION = gql`
+  mutation CREATE_USER($email: String!, $name: String!, $password: String!) {
+    createUser(data: { email: $email, name: $name, password: $password }) {
+      name
+      email
     }
   }
 `;
 
-export const LogIn = () => {
+export const SignUp = () => {
   const { inputs, handleInputChange, resetForm } = useForm({
+    name: '',
     email: '',
     password: '',
   });
 
-  const [authenticateUser, { data, loading }] = useMutation(
-    AUTHENTICATE_USER_MUTATION,
+  const [createUser, { data, error, loading }] = useMutation(
+    CREATE_USER_MUTATION,
     {
       variables: inputs,
-      refetchQueries: [{ query: USER_AUTHENTICATED_QUERY }],
     }
   );
 
-  const handleSignIn = (event) => {
+  const handleSignIn = async (event) => {
     event.preventDefault();
-    authenticateUser();
+    await createUser().catch((err) => console.error(err));
     resetForm();
   };
 
-  const IsError =
-    data?.authenticateUserWithPassword?.__typename ===
-    'UserAuthenticationWithPasswordFailure';
-
   return (
     <StyledForm onSubmit={handleSignIn}>
-      <h3>Log-in to your account</h3>
-      <DisplayError error={IsError && data?.authenticateUserWithPassword} />
+      <h3>
+        {data?.createUser
+          ? `Signed Up with ${data?.createUser?.email} - Please go ahaead and login!`
+          : `Sign-up with your email`}
+      </h3>
+      <DisplayError error={error} />
+      <fieldset>
+        <label htmlFor="name">
+          Email:
+          <input
+            id="name"
+            type="text"
+            name="name"
+            placeholder="Your name"
+            autoComplete="name"
+            value={inputs?.name}
+            onChange={handleInputChange}
+          />
+        </label>
+      </fieldset>
       <fieldset>
         <label htmlFor="email">
           Email:
@@ -60,6 +64,7 @@ export const LogIn = () => {
             name="email"
             placeholder="Your email"
             value={inputs?.email}
+            autoComplete="email"
             onChange={handleInputChange}
           />
         </label>
@@ -73,6 +78,7 @@ export const LogIn = () => {
             name="password"
             placeholder="Your password"
             value={inputs?.password}
+            autoComplete="password"
             onChange={handleInputChange}
           />
         </label>
@@ -84,4 +90,4 @@ export const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default SignUp;

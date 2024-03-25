@@ -5,17 +5,28 @@ import StyledForm from './styles/Form';
 import DisplayError from './ErrorMessage';
 
 export const RESET_PASSWORD_MUTATION = gql`
-  mutation RESET_PASSWORD($email: String!) {
-    sendUserPasswordResetLink(email: $email) {
+  mutation RESET_PASSWORD(
+    $email: String!
+    $token: String!
+    $password: String!
+  ) {
+    redeemUserPasswordResetToken(
+      email: $email
+      token: $token
+      password: $password
+    ) {
       code
       message
     }
   }
 `;
 
-export const ResetPassword = () => {
+export const ResetPassword = ({ token }) => {
+  console.log('token: ', token);
   const { inputs, handleInputChange, resetForm } = useForm({
     email: '',
+    password: '',
+    token,
   });
 
   const [resetPassword, { data, error, loading }] = useMutation(
@@ -24,16 +35,24 @@ export const ResetPassword = () => {
       variables: inputs,
     }
   );
+  const isSuccessfulError = data?.redeemUserPasswordResetToken !== null;
 
   const handleSignIn = (event) => {
     event.preventDefault();
-    resetPassword();
+    resetPassword().catch((error) => console.error(error));
     resetForm();
   };
 
   return (
     <StyledForm onSubmit={handleSignIn}>
-      <h3>Forgot Your Password?</h3>
+      <h2>
+        {isSuccessfulError
+          ? `Reset Password`
+          : `Reset Password Successfully. Please log-in.`}
+      </h2>
+      <h3>
+        {isSuccessfulError && data?.redeemUserPasswordResetToken?.message}
+      </h3>
       <DisplayError error={error} />
       <fieldset>
         <label htmlFor="email">
@@ -49,8 +68,22 @@ export const ResetPassword = () => {
           />
         </label>
       </fieldset>
+      <fieldset>
+        <label htmlFor="password">
+          Password:
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Your password"
+            value={inputs?.password}
+            autoComplete="password"
+            onChange={handleInputChange}
+          />
+        </label>
+      </fieldset>
       <button type="submit" disabled={loading}>
-        Request Reset!
+        Reset Password
       </button>
     </StyledForm>
   );

@@ -43,7 +43,7 @@ export const SignUp = () => {
       <DisplayError error={error} />
       <fieldset>
         <label htmlFor="name">
-          Email:
+          Name:
           <input
             id="name"
             type="text"

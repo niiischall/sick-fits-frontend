@@ -1,7 +1,5 @@
-const SignInPage = () => (
-  <div>
-    <p>sign-in</p>
-  </div>
-);
+import Login from '../components/LogIn';
+
+const SignInPage = () => <Login />;
 
 export default SignInPage;

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
-import { USER_AUTHENTICATED_QUERY } from './User';
+import { USER_AUTHENTICATED_QUERY } from '../lib/hooks/useUser';
 import useForm from '../lib/hooks/useForm';
 import StyledForm from './styles/Form';
 import DisplayError from './ErrorMessage';
@@ -33,26 +33,23 @@ export const LogIn = () => {
     AUTHENTICATE_USER_MUTATION,
     {
       variables: inputs,
-      refetchQueries: [USER_AUTHENTICATED_QUERY],
+      refetchQueries: [{ query: USER_AUTHENTICATED_QUERY }],
     }
   );
 
   const handleSignIn = (event) => {
     event.preventDefault();
-    console.log(inputs);
     authenticateUser();
     resetForm();
   };
 
-  const error =
+  const IsError =
     data?.authenticateUserWithPassword?.__typename ===
-    'UserAuthenticationWithPasswordFailure'
-      ? data?.authenticateUserWithPassword
-      : undefined;
+    'UserAuthenticationWithPasswordFailure';
 
   return (
     <StyledForm onSubmit={handleSignIn}>
-      <DisplayError error={error} />
+      <DisplayError error={IsError && data?.authenticateUserWithPassword} />
       <fieldset>
         <label htmlFor="email">
           Email:

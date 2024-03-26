@@ -27,17 +27,17 @@ export const SignUp = () => {
     }
   );
 
-  const handleSignIn = async (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
-    await createUser().catch((err) => console.error(err));
+    createUser().catch((err) => console.error(err));
     resetForm();
   };
 
   return (
-    <StyledForm onSubmit={handleSignIn}>
+    <StyledForm onSubmit={handleSignUp}>
       <h3>
         {data?.createUser
-          ? `Signed Up with ${data?.createUser?.email} - Please go ahaead and login!`
+          ? `Signed Up with ${data?.createUser?.email} - Please go ahaead ${data?.createUser?.name}, login!`
           : `Sign-up with your email`}
       </h3>
       <DisplayError error={error} />

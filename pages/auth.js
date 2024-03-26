@@ -9,7 +9,7 @@ export const GridStyles = styled.div`
   grid-gap: 2rem;
 `;
 
-const LogInPage = () => (
+const AuthPage = () => (
   <GridStyles>
     <Login />
     <Signup />
@@ -17,4 +17,4 @@ const LogInPage = () => (
   </GridStyles>
 );
 
-export default LogInPage;
+export default AuthPage;

@@ -29,7 +29,7 @@ export const LogIn = () => {
     password: '',
   });
 
-  const [authenticateUser, { data, loading }] = useMutation(
+  const [authenticateUser, { data, error, loading }] = useMutation(
     AUTHENTICATE_USER_MUTATION,
     {
       variables: inputs,
@@ -39,18 +39,22 @@ export const LogIn = () => {
 
   const handleSignIn = (event) => {
     event.preventDefault();
-    authenticateUser();
+    authenticateUser().catch((err) => console.error(err));
     resetForm();
   };
 
-  const IsError =
+  const IsSuccessfulError =
     data?.authenticateUserWithPassword?.__typename ===
     'UserAuthenticationWithPasswordFailure';
 
   return (
     <StyledForm onSubmit={handleSignIn}>
       <h3>Log-in to your account</h3>
-      <DisplayError error={IsError && data?.authenticateUserWithPassword} />
+      <DisplayError
+        error={
+          (IsSuccessfulError && data?.authenticateUserWithPassword) || error
+        }
+      />
       <fieldset>
         <label htmlFor="email">
           Email:

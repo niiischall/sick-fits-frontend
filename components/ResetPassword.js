@@ -22,7 +22,6 @@ export const RESET_PASSWORD_MUTATION = gql`
 `;
 
 export const ResetPassword = ({ token }) => {
-  console.log('token: ', token);
   const { inputs, handleInputChange, resetForm } = useForm({
     email: '',
     password: '',
@@ -37,18 +36,18 @@ export const ResetPassword = ({ token }) => {
   );
   const isSuccessfulError = data?.redeemUserPasswordResetToken !== null;
 
-  const handleSignIn = (event) => {
+  const handleResetPassword = (event) => {
     event.preventDefault();
     resetPassword().catch((error) => console.error(error));
     resetForm();
   };
 
   return (
-    <StyledForm onSubmit={handleSignIn}>
+    <StyledForm onSubmit={handleResetPassword}>
       <h2>
         {isSuccessfulError
           ? `Reset Password`
-          : `Reset Password Successfully. Please log-in.`}
+          : `Password Reset Success. Please log-in.`}
       </h2>
       <h3>
         {isSuccessfulError && data?.redeemUserPasswordResetToken?.message}

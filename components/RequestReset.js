@@ -25,23 +25,25 @@ export const RequestResetPassword = () => {
     }
   );
 
-  const isSuccessfulError = data?.sendUserPasswordResetLink !== null;
+  const isSuccess = data?.sendUserPasswordResetLink === null;
 
   const handleRequestReset = (event) => {
     event.preventDefault();
-    requestResetPassword();
+    requestResetPassword().catch((err) => console.error(err));
     resetForm();
   };
 
   return (
     <StyledForm onSubmit={handleRequestReset}>
       <h2>
-        {isSuccessfulError
-          ? `Request Password`
-          : `Request Reset Password Successfully. Please log-in.`}
+        {isSuccess
+          ? `Request For Reset Placed Successfully. Please Check Email.`
+          : `Request Password Reset`}
       </h2>
-      <h3>{isSuccessfulError && data?.sendUserPasswordResetLink?.message}</h3>
-      <DisplayError error={error || data?.sendUserPasswordResetLink} />
+      <h3>{!isSuccess && data?.sendUserPasswordResetLink?.message}</h3>
+      <DisplayError
+        error={error || (!isSuccess && data?.sendUserPasswordResetLink)}
+      />
       <fieldset>
         <label htmlFor="email">
           Email:

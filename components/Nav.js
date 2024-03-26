@@ -20,7 +20,7 @@ const Nav = () => {
       ) : (
         <>
           <Link href="/products">Products</Link>
-          <Link href="/log-in">Log-In</Link>
+          <Link href="/auth">Log-In</Link>
         </>
       )}
     </NavStyles>

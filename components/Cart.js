@@ -1,12 +1,13 @@
-import useUser from '../lib/hooks/useUser';
 import CartItemStyles from './styles/CartItemStyles';
 import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';
+import CloseButton from './styles/CloseButton';
 import formatMoney from '../lib/utils/formayMoney';
+import useUser from '../lib/hooks/useUser';
 import calcTotalPrice from '../lib/utils/calcTotalPrice';
+import { useCart } from '../lib/CartProvider';
 
 const CartItem = ({ item }) => {
-  console.log(item);
   const { product } = item ?? {};
   return (
     <CartItemStyles>
@@ -29,17 +30,19 @@ const CartItem = ({ item }) => {
 };
 
 export const Cart = () => {
-  const user = useUser();
-  const { name, cart } = user?.authenticatedItem ?? {};
+  const { authenticatedItem } = useUser();
+  const { name, cart } = authenticatedItem ?? {};
+  const { cartOpen, closeCart } = useCart();
 
-  if (!user) {
+  if (!authenticatedItem) {
     return null;
   }
 
   return (
-    <CartStyles open>
+    <CartStyles open={cartOpen}>
       <header>
         <Supreme>{name}'s cart</Supreme>
+        <CloseButton onClick={closeCart}>&times;</CloseButton>
       </header>
       <ul>
         {cart.map((item) => (

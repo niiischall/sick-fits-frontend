@@ -3,6 +3,7 @@ import Nprogress from 'nprogress';
 import { ApolloProvider } from '@apollo/client';
 import Layout from '../components/Layout';
 import withData from '../lib/withData';
+import { CartProvider } from '../lib/CartProvider';
 
 import '../components/styles/nprogress.css';
 
@@ -12,9 +13,11 @@ Router.events.on('routeChangeError', () => Nprogress.done());
 
 const MyApp = ({ Component, pageProps, apollo }) => (
   <ApolloProvider client={apollo}>
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <CartProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </CartProvider>
   </ApolloProvider>
 );
 

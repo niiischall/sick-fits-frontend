@@ -31,13 +31,14 @@ const CartItem = ({ item }) => {
 
 export const Cart = () => {
   const user = useUser();
-  const { name, cart } = user?.authenticatedItem ?? {};
+  const { name = '', cart = [] } = user?.authenticatedItem ?? {};
   const { cartOpen, closeCart } = useCart();
 
   if (!user) {
     return null;
   }
 
+  console.log(cart);
   return (
     <CartStyles open={cartOpen}>
       <header>
@@ -45,7 +46,7 @@ export const Cart = () => {
         <CloseButton onClick={closeCart}>&times;</CloseButton>
       </header>
       <ul>
-        {cart.map((item) => (
+        {cart?.map((item) => (
           <CartItem key={item.id} item={item} />
         ))}
       </ul>

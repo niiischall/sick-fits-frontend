@@ -1,23 +1,9 @@
-import styled from 'styled-components';
 import useUser from '../lib/hooks/useUser';
+import CartItemStyles from './styles/CartItemStyles';
 import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';
 import formatMoney from '../lib/utils/formayMoney';
 import calcTotalPrice from '../lib/utils/calcTotalPrice';
-
-const CartItemStyles = styled.li`
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--light-gray);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  img {
-    margin-right: 1rem;
-  }
-  h3,
-  p {
-    margin: 0;
-  }
-`;
 
 const CartItem = ({ item }) => {
   console.log(item);

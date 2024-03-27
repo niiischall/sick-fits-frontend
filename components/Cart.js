@@ -30,11 +30,11 @@ const CartItem = ({ item }) => {
 };
 
 export const Cart = () => {
-  const { authenticatedItem } = useUser();
-  const { name, cart } = authenticatedItem ?? {};
+  const user = useUser();
+  const { name, cart } = user?.authenticatedItem ?? {};
   const { cartOpen, closeCart } = useCart();
 
-  if (!authenticatedItem) {
+  if (!user) {
     return null;
   }
 

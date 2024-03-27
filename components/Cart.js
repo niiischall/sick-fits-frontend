@@ -6,6 +6,7 @@ import formatMoney from '../lib/utils/formayMoney';
 import useUser from '../lib/hooks/useUser';
 import calcTotalPrice from '../lib/utils/calcTotalPrice';
 import { useCart } from '../lib/CartProvider';
+import RemoveFromCart from './RemoveFromCart';
 
 const CartItem = ({ item }) => {
   const { product } = item ?? {};
@@ -25,6 +26,7 @@ const CartItem = ({ item }) => {
           </em>
         </p>
       </div>
+      <RemoveFromCart cartId={item?.id} />
     </CartItemStyles>
   );
 };
@@ -38,7 +40,6 @@ export const Cart = () => {
     return null;
   }
 
-  console.log(cart);
   return (
     <CartStyles open={cartOpen}>
       <header>

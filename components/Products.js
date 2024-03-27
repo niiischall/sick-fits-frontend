@@ -9,6 +9,7 @@ import Title from './styles/Title';
 import PriceTag from './styles/PriceTag';
 import formatMoney from '../lib/utils/formayMoney';
 import Delete from './Delete';
+import AddToCart from './AddToCart';
 import ProductButtonContainer from './styles/ProductButtonContainer';
 import Pagination from './Pagination';
 import { perPage } from '../config';
@@ -52,9 +53,8 @@ const Product = ({ product }) => (
       <Link href={{ pathname: '/edit', query: { id: product?.id } }}>
         Edit ✍🏻
       </Link>
-      <Delete id={product?.id}>
-        <span>Delete 🗑️</span>
-      </Delete>
+      <AddToCart productId={product?.id} />
+      <Delete id={product?.id}>Delete 🗑️</Delete>
     </ProductButtonContainer>
   </ItemStyles>
 );

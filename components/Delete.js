@@ -32,11 +32,9 @@ const Delete = ({ id, children }) => {
   };
 
   return (
-    <div>
-      <button type="button" onClick={handleDelete} disabled={loading}>
-        {children}
-      </button>
-    </div>
+    <button type="button" onClick={handleDelete} disabled={loading}>
+      {children}
+    </button>
   );
 };
 

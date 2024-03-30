@@ -7,6 +7,7 @@ import useUser from '../lib/hooks/useUser';
 import calcTotalPrice from '../lib/utils/calcTotalPrice';
 import { useCart } from '../lib/CartProvider';
 import RemoveFromCart from './RemoveFromCart';
+import Checkout from './Checkout';
 
 const CartItem = ({ item }) => {
   const { product } = item ?? {};
@@ -53,6 +54,7 @@ export const Cart = () => {
       </ul>
       <footer>
         <p>{formatMoney(calcTotalPrice(cart))}</p>
+        <Checkout />
       </footer>
     </CartStyles>
   );

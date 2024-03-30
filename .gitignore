@@ -6,7 +6,7 @@
 # misc
 .next
 .vscode
-.env
+.env.local
 .DS_Store
 package-lock.json
 node_modules

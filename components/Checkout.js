@@ -75,16 +75,24 @@ export const CheckoutForm = () => {
         token: paymentMethod?.id,
       },
     });
-    // close cart.
     // stop loader
     setLoading(false);
     nProgress.done();
 
+    // close cart.
     closeCart();
     router.push({
       pathname: `/order/${order.data.checkout.id}`,
     });
   };
+
+  if (isLoading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <CheckoutFormStyled onSubmit={handleSubmit}>

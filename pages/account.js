@@ -1,7 +1,9 @@
+import PleaseSignIn from '../components/PleaseSignIn';
+
 const AccountPage = () => (
-  <div>
+  <PleaseSignIn>
     <p>Account</p>
-  </div>
+  </PleaseSignIn>
 );
 
 export default AccountPage;

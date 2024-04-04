@@ -31,12 +31,6 @@ export const CHECKOUT_MUTATION = gql`
 
 const stripeProvider = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
 
-export const Checkout = () => (
-  <Elements stripe={stripeProvider}>
-    <CheckoutForm />
-  </Elements>
-);
-
 export const CheckoutForm = () => {
   const router = useRouter();
   const { closeCart } = useCart();
@@ -45,7 +39,6 @@ export const CheckoutForm = () => {
     refetchQueries: [{ query: USER_AUTHENTICATED_QUERY }],
   });
 
-  const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const elements = useElements();
@@ -54,8 +47,7 @@ export const CheckoutForm = () => {
     event.preventDefault();
     // start loading.
     setError(null);
-    setLoading(true);
-    // start page transition loader.
+    // start loader.
     nProgress.start();
     // create payment method via stripe, token is returned.
     const { paymentMethod, error } = await stripe.createPaymentMethod({
@@ -65,7 +57,6 @@ export const CheckoutForm = () => {
     // if error is received, show error.
     if (error) {
       setError(error);
-      setLoading(false);
       nProgress.done();
       return;
     }
@@ -76,7 +67,6 @@ export const CheckoutForm = () => {
       },
     });
     // stop loader
-    setLoading(false);
     nProgress.done();
 
     // close cart.
@@ -85,14 +75,6 @@ export const CheckoutForm = () => {
       pathname: `/order/${order.data.checkout.id}`,
     });
   };
-
-  if (isLoading) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
-  }
 
   return (
     <CheckoutFormStyled onSubmit={handleSubmit}>
@@ -103,5 +85,11 @@ export const CheckoutForm = () => {
     </CheckoutFormStyled>
   );
 };
+
+export const Checkout = () => (
+  <Elements stripe={stripeProvider}>
+    <CheckoutForm />
+  </Elements>
+);
 
 export default Checkout;
